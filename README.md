@@ -9,6 +9,7 @@
 
 * [wordcloud](https://pypi.org/project/wordcloud/)
 * [numpy](https://numpy.org/install/)
+* [scipy](https://pypi.org/project/scipy/)
 * [pillow](https://pypi.org/project/Pillow/)
 * [matplotlib](https://pypi.org/project/matplotlib/)
 * Python version: 3.6+

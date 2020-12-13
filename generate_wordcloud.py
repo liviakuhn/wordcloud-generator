@@ -2,15 +2,19 @@ from os import getenv
 from os.path import join
 import argparse as ap
 import json
+import numpy as np
 import matplotlib.pyplot as plt
-from wordcloud import WordCloud
+from PIL import Image
+from scipy.ndimage import gaussian_gradient_magnitude
+from wordcloud import WordCloud, ImageColorGenerator
 
 BACKGROUND_COLOR = '#FFFFFF'
-COLORMAP = 'viridis'
+COLORMAP = 'summer'
 REGEXP = r'\w+( [\w]+)?'
 
 HOME_DIR = getenv('HOME')
 FONT_PATH = join(HOME_DIR, 'font/Roboto-Regular.ttf')
+IMAGE_PATH = join(HOME_DIR, 'ellipse.png')
 
 
 def parse_args():
@@ -22,7 +26,10 @@ def parse_args():
                         help='path to wordcloud')
     parser.add_argument('--font',
                         help='path to font',
-                        default=getenv('FONT_PATH'))
+                        default=getenv('FONT_PATH', FONT_PATH))
+    parser.add_argument('--image',
+                        help='path to image to be used as mask',
+                        default=getenv('IMAGE_PATH', IMAGE_PATH))
     return parser.parse_args()
 
 
@@ -32,14 +39,32 @@ def read_word_list(words_in):
         return word_dic
 
 
-def generate_wordcloud(word_dic, font_path):
+def _generate_mask(image_path):
+    colors = np.array(Image.open(image_path))
+    mask = colors.copy()
+    edges = np.mean(
+        [gaussian_gradient_magnitude(colors[:, :, i] / 255.0, 2)
+         for i in range(3)], axis=0)
+    mask[edges > 0.8] = 255
+    return colors, mask
+
+
+def generate_wordcloud(word_dic, font_path, image_path):
+    colors, mask = _generate_mask(image_path)
     wordcloud = WordCloud(prefer_horizontal=1,
                           background_color=BACKGROUND_COLOR,
                           font_path=font_path,
+                          # relative_scaling=.25,
+                          # random_state=28,
+                          # margin=10,
+                          repeat=True,
                           colormap=COLORMAP,
+                          mask=mask,
                           width=1536,
                           height=768,
                           regexp=REGEXP).generate_from_frequencies(word_dic)
+    # image_colors = ImageColorGenerator(colors)
+    # wordcloud.recolor(color_func=image_colors)
     return wordcloud
 
 
@@ -55,12 +80,8 @@ def display_wordcloud(wordcloud):
 
 def main():
     args = parse_args()
-    if args.font and args.font != '':
-        font_path = args.font
-    else:
-        font_path = FONT_PATH
     word_dic = read_word_list(args.words_in)
-    wordcloud = generate_wordcloud(word_dic, font_path)
+    wordcloud = generate_wordcloud(word_dic, args.font, args.image)
     save_wordcloud(args.wordcloud_out, wordcloud)
     display_wordcloud(wordcloud)
 
