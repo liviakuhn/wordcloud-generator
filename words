@@ -1,72 +1,36 @@
-Python
-data
-science
-data science
-software development
-software
-development
-Linux
-clean code
-clean
-code
-documentation
-microservices
-containers
-databases
-version control
-version
-control
-agile methodologies
-agile
-methodologies
-data analytics
-data
-analytics
-data analysis
-data
-analysis
-machine learning
-machine
-learning
-algorithms
-process optimisation
-process
-optimisation
-software deployment
-software
-deployment
-software maintenance
-software
-maintenance
-cloud computing
-cloud
-computing
-on premise
-on
-premise
-scalability testing
-scalability
-testing
-performance testing
-performance
-testing
-Java
-web applications
-web
-applications
-ETL scripts
-ETL
-scripts
-data pipelines
-data
-pipelines
-data engineering
-data
-engineering
-DevOps
-Bash
-Git
-AWS
-Docker
-Elasticsearch
-MongoDB
+{
+  "Python": 5,
+  "data science": 1,
+  "software development": 3,
+  "Linux": 3,
+  "clean code": 2,
+  "documentation": 1,
+  "microservices": 3,
+  "containers": 2,
+  "databases": 1,
+  "version control": 1,
+  "agile methodologies": 1,
+  "data analytics": 1,
+  "data analysis": 1,
+  "machine learning": 1,
+  "algorithms": 1,
+  "process optimisation": 1,
+  "software deployment": 2,
+  "software maintenance": 2,
+  "cloud computing": 2,
+  "on premise": 1,
+  "scalability testing": 1,
+  "performance testing": 1,
+  "Java": 1,
+  "web applications": 1,
+  "ETL scripts": 3,
+  "data pipelines": 2,
+  "data engineering": 3,
+  "DevOps": 2,
+  "Bash": 3,
+  "Git": 2,
+  "AWS": 1,
+  "Docker": 3,
+  "Elasticsearch": 1,
+  "MongoDB": 2
+}

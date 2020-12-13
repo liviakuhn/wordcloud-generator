@@ -1,15 +1,19 @@
+from os import getenv
+from os.path import join
 import argparse as ap
+import json
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
-
 
 LINKEDIN_COLORS = ['#0077B5', '#dce6f1']
 CONTEXTA_COLORS = ['#00adee', '#e4097f']
 
 BACKGROUND_COLOR = '#FFFFFF'
-FONT_PATH = '/home/livia/font/Roboto-Regular.ttf'
-COLORMAP = 'YlOrRd'
+COLORMAP = 'viridis'
 REGEXP = r'\w+( [\w]+)?'
+
+HOME_DIR = getenv('HOME')
+FONT_PATH = join(HOME_DIR, 'font/Roboto-Regular.ttf')
 
 
 def parse_args():
@@ -17,27 +21,33 @@ def parse_args():
         description='Generate a word cloud from a list of words.')
     parser.add_argument('words_in', help='path to list of words')
     parser.add_argument('wordcloud_out', help='path to wordcloud')
+    parser.add_argument('--font', help='path to font',
+                        default=getenv('FONT_PATH'))
     return parser.parse_args()
 
 
 def read_word_list(words_in):
     with open(words_in, 'r') as src:
-        words = [word.strip('\n') for word in src]
-        word_dic = {}
-        for word in words:
-            if word not in word_dic:
-                word_dic[word] = 1
-            elif word in word_dic:
-                word_dic[word] += 1
+        word_dic = json.load(src)
+        # If using newline-separated words:
+        # words = [word.strip('\n') for word in src]
+        # word_dic = {}
+        # for word in words:
+        #     if word not in word_dic:
+        #         word_dic[word] = 1
+        #     elif word in word_dic:
+        #         word_dic[word] += 1
         return word_dic
 
 
-def generate_wordcloud(word_dic):
+def generate_wordcloud(word_dic, font_path):
     wordcloud = WordCloud(prefer_horizontal=1,
                           background_color=BACKGROUND_COLOR,
-                          font_path=FONT_PATH,
+                          font_path=font_path,
                           colormap=COLORMAP,
-                          regexp=REGEXP).generate(word_dic)
+                          width=1536,
+                          height=768,
+                          regexp=REGEXP).generate_from_frequencies(word_dic)
     return wordcloud
 
 
@@ -53,8 +63,12 @@ def display_wordcloud(wordcloud):
 
 def main():
     args = parse_args()
+    if args.font and args.font != '':
+        font_path = args.font
+    else:
+        font_path = FONT_PATH
     word_dic = read_word_list(args.words_in)
-    wordcloud = generate_wordcloud(word_dic)
+    wordcloud = generate_wordcloud(word_dic, font_path)
     save_wordcloud(args.wordcloud_out, wordcloud)
     display_wordcloud(wordcloud)
 
