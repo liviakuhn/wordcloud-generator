@@ -2,11 +2,12 @@
 
 ### Summary ###
 
-* This tool generates wordclouds from word-frequency dictionaries. 
+* This tool uses the wordcloud library to generate wordclouds from word-frequency dictionaries. 
 * Version: 0.1.0
 
 ### Requirements ###
 
+* [wordcloud](https://pypi.org/project/wordcloud/)
 * [numpy](https://numpy.org/install/)
 * [pillow](https://pypi.org/project/Pillow/)
 * [matplotlib](https://pypi.org/project/matplotlib/)
