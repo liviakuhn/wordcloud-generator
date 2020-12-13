@@ -3,10 +3,7 @@ from os.path import join
 import argparse as ap
 import json
 import matplotlib.pyplot as plt
-from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
-
-LINKEDIN_COLORS = ['#0077B5', '#dce6f1']
-CONTEXTA_COLORS = ['#00adee', '#e4097f']
+from wordcloud import WordCloud
 
 BACKGROUND_COLOR = '#FFFFFF'
 COLORMAP = 'viridis'
@@ -18,10 +15,13 @@ FONT_PATH = join(HOME_DIR, 'font/Roboto-Regular.ttf')
 
 def parse_args():
     parser = ap.ArgumentParser(
-        description='Generate a word cloud from a list of words.')
-    parser.add_argument('words_in', help='path to list of words')
-    parser.add_argument('wordcloud_out', help='path to wordcloud')
-    parser.add_argument('--font', help='path to font',
+        description='Generate a word cloud from a word-frequency dictionary.')
+    parser.add_argument('words_in',
+                        help='path to word-frequency dictionary')
+    parser.add_argument('wordcloud_out',
+                        help='path to wordcloud')
+    parser.add_argument('--font',
+                        help='path to font',
                         default=getenv('FONT_PATH'))
     return parser.parse_args()
 
@@ -29,14 +29,6 @@ def parse_args():
 def read_word_list(words_in):
     with open(words_in, 'r') as src:
         word_dic = json.load(src)
-        # If using newline-separated words:
-        # words = [word.strip('\n') for word in src]
-        # word_dic = {}
-        # for word in words:
-        #     if word not in word_dic:
-        #         word_dic[word] = 1
-        #     elif word in word_dic:
-        #         word_dic[word] += 1
         return word_dic
 
 
