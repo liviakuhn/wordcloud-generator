@@ -16,7 +16,7 @@
 
 ### Usage ###
 
-* `python generate_wordcloud.py -h` to display help message.
+* `python wordcloud_generator/__init__.py -h` to display help message.
 * Usage: `python wordcloud_generator/__init__.py <words_in> <wordcloud_out> --image
   <path_to_image> --font <path_to_font> --display`
 * Example usage: `python wordcloud_generator/__init__.py word_frequencies wordcloud.png --image
