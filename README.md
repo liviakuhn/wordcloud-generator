@@ -2,7 +2,7 @@
 
 ### Summary ###
 
-* This tool uses the wordcloud library to generate wordclouds from word-frequency dictionaries. 
+* This tool uses the [wordcloud](https://github.com/amueller/word_cloud) library to generate wordclouds from word-frequency dictionaries. 
 * Version: 1.0.0
 
 ### Requirements ###
