@@ -1,14 +1,20 @@
+from random import choice
 import numpy as np
 from PIL import Image
 from scipy.ndimage import gaussian_gradient_magnitude
 from wordcloud import WordCloud, ImageColorGenerator
 
-COLORMAP = 'summer'
-BACKGROUND_COLOR = '#FFFFFF'
+COLORMAP = 'ocean'
+COLORS = (
+ '#0F468C',
+ '#1665CC',
+ '#072040'
+)
+BACKGROUND_COLOR = '#ffffff'
 HEIGHT = 768
 WIDTH = 1536
 PREFER_HORIZONTAL = 1
-RANDOM_STATE = 50
+# RANDOM_STATE = 50
 REPEAT = True
 
 
@@ -27,12 +33,13 @@ def main(word_dic, image_path, font_path, use_image_colors):
     wordcloud = WordCloud(mask=mask,
                           font_path=font_path,
                           regexp=r'\w+( [\w]+)?',
-                          colormap=COLORMAP,
+                          # colormap=COLORMAP,
+                          color_func=lambda *args, **kwargs: choice(COLORS),
                           background_color=BACKGROUND_COLOR,
                           height=HEIGHT,
                           width=WIDTH,
                           prefer_horizontal=PREFER_HORIZONTAL,
-                          random_state=RANDOM_STATE,
+                          # random_state=RANDOM_STATE,
                           repeat=REPEAT).generate_from_frequencies(word_dic)
     if use_image_colors:
         image_colors = ImageColorGenerator(colors)

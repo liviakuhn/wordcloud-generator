@@ -8,8 +8,8 @@ import matplotlib.pyplot as plt
 import generate
 
 DIR_NAME = dirname(__file__)
-IMAGE_PATH = join(DIR_NAME, '..', 'bubble.jpeg')
-FONT_PATH = join(DIR_NAME, '..', 'fonts/Roboto-Regular.ttf')
+IMAGE_PATH = join(DIR_NAME, '..', 'rectangle.png')
+FONT_PATH = join(DIR_NAME, '..', 'fonts/roboto/OpenSans-Regular.ttf')
 
 
 def parse_args():
